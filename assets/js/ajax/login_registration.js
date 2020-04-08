@@ -133,7 +133,7 @@ $(document).ready(function(){
                             console.log(response)
                             console.log(gender)
                             var response = JSON.parse(response);
-                            if(response.status=="success")
+                            if(response.status == "success")
                             {
                                 var url='./profile.html?id='+response.message;
                                 swal("successfully registered", ":)", "success");
@@ -152,7 +152,7 @@ $(document).ready(function(){
                     });
                 }              
             }
-            
+          return false;
         });
         return false;
     });

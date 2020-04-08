@@ -1,7 +1,7 @@
 <?php
 
 $_SESSION['logged_in']=0;
-$_SESSION['nu_id']=0;
+$_SESSION['user_id']=0;
 $_SESSION['email']="";
 
 session_start();
