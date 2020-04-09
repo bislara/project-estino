@@ -9,7 +9,7 @@
 
     if (isset($email) && isset($name)) {
         
-        $q = "SELECT user_id FROM users WHERE email='".$email."' AND name ='".$name."' ";
+        $q = "SELECT user_id,email,login_type,name FROM users WHERE email='".$email."' AND name ='".$name."' ";
         
         $query = mysqli_query($conn, $q);
 
@@ -17,11 +17,13 @@
 
             if (mysqli_num_rows($query) == 1) {
 
-                $user_id = mysqli_fetch_array($query)["user_id"];
-                $email = mysqli_fetch_array($query)["email"];
-                $login_type = mysqli_fetch_array($query)["login_type"];
+                $info = mysqli_fetch_array($query,MYSQLI_ASSOC);
+                $user_id = $info["user_id"];
+                $email = $info["email"];
+                $login_type = $info["login_type"];
 
                 session_start();
+
                 $_SESSION['login_type'] = $login_type;
                 $_SESSION['logged_in'] = 1;
                 $_SESSION['user_id']=$user_id;

@@ -20,58 +20,13 @@ $(document).ready(function() {
 	  if(user_id)
 	   {
 
-	   	var filename="";
-	   	if (user_id%10===0) 
-	   	{
-	   		filename="shield.png";
-	   	}
-	   	else if (user_id%11===0)
-	   	{
-	   		filename="thanos.png";
-	   	}
-	   	else if (user_id%13===0)
-	   	{
-	   		filename="naruto.png";
-	   	}
-	   	else if (user_id%9===0) 
-	   	{
-	   		filename="arrow.png";
-	   	}
-	   	else if (user_id%8===0)
-	   	{
-	   		filename="iron_man.png";
-	   	}
-	   	else if (user_id%7===0)
-	   	{
-	   		filename="super_man.png";
-	   	}
-	   	else if (user_id%6===0)
-	   	{
-	   		filename="thor.png";
-	   	}
-	   	else if (user_id%5===0)
-	   	{
-	   		filename="batman.png";
-	   	}
-	   	else if (user_id%4===0)
-	   	{
-	   		filename="strange.png";
-	   	}
-	   	else
-	   	{
-	   		filename="flash.png";
-	   	}
-	   	// document.getElementById('hero_img').src="../assets/img/profile_pics/"+filename ;
-		// + selected_text + ".jpg";
-
-
 		//var id=0;
 		$.ajax({
 			url: '../apis/user/auth/profile.php',
 			data: "user_id="+user_id,
 			type: 'get',
 			success: function(response) {
-				// console.log(response);
+				console.log(response);
 				if (response=="")
 				{
 					swal('Please Login First to open profile page !', ': [', 'warning').then((value) => {
@@ -81,25 +36,30 @@ $(document).ready(function() {
 				else
 				{
 					response = JSON.parse(response);
-            	console.log(response);
+            		console.log(response);
 					if (response.status == 'success') {
 						id = response.result['basicInfo']['user_id'];
 						name = response.result['basicInfo']['name'];
 						email = response.result['basicInfo']['email'];
 						var phone = response.result['basicInfo']['phone'];
-						var college = response.result['basicInfo']['college'];
-						var ca_id = response.result['basicInfo']['ca_id'];
+						var address = response.result['basicInfo']['address'];
 						
+						console.log(phone,address);
 						
 	                
 						
-						document.getElementById('user_id').innerHTML = '<b>NU ID</b> : ' + id;
-						document.getElementById('user_name').innerHTML = '<b>Name</b> : ' + name;
-						document.getElementById('user_email').innerHTML = '<b>Email</b> : ' + email;
-						document.getElementById('user_phone').innerHTML = '<b>Phone</b> : ' + phone;
-	                    document.getElementById('user_address').innerHTML = '<b>Address</b> : ' + address;
+						// document.getElementById('user_id').innerHTML = '<b>NU ID</b> : ' + id;
+						// document.getElementById('user_name').innerHTML = '<b>Name</b> : ' + name;
+						// document.getElementById('user_email').innerHTML = '<b>Email</b> : ' + email;
+						// document.getElementById('user_phone').innerHTML = '<b>Phone</b> : ' + phone;
+	     //                document.getElementById('user_address').innerHTML = '<b>Address</b> : ' + address;
 
 						
+				}
+				else if (response.status == 'failure' && response.result =="update_profile") {
+					swal('Please Update Profile to use the app !', ': [', 'warning').then((value) => {
+                          window.location = './update_profile.html?id='+user_id;
+					});
 				}
 
 				else if (response.status == 'failure') {
