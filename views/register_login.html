@@ -63,7 +63,10 @@
 				<input type="email" id="login_email" placeholder="Email" />
 				<input type="password" id="login_password" placeholder="Password" />
 				<a class="btnR" href="#">Forgot your password?</a>
-				<button id="signin">Sign In</button>
+				<button id="signin">Sign In</button><br>
+				<h4>OR</h4><br>
+				<a href="" id="fb_button"><img src="../assets/images/fb_login.png"></a><br><br>
+				<a href="" id="google_btn"><img style="" src="../assets/images/google_login3.png"></a>
 			</form>
 		</div>
 		<div class="overlay-container">
@@ -85,7 +88,13 @@
 	<script src="../assets/js/register.js"></script>
 	<script src="../assets/js/jquery.min.js"></script>
 	<script src="../assets/js/sweetalert/sweetalert.js"></script>
-
+	
+    <script src="../assets/js/ajax/social_login/login_fb_sdk.js"></script>
+    <script src="../assets/js/ajax/social_login/login_google_sdk.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js"
+        onload="this.onload=function(){};handleClientLoad()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload()">
+	</script>
     <script src="../assets/js/ajax/login_registration.js"></script>
 	
 </body>
