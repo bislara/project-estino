@@ -22,7 +22,8 @@
                     $basicInfo = mysqli_fetch_array($query,MYSQLI_ASSOC);           
                 }
 
-
+                $basicInfo["gps_details"] =  unserialize($basicInfo["gps_details"]);
+                
                 $result = (object) [
                     'basicInfo'=>$basicInfo,
                 ];
@@ -69,6 +70,7 @@ else if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id']) && isset($
                 }
                 else{
 
+                $basicInfo["gps_details"] =  unserialize($basicInfo["gps_details"]);
                 $result = (object) [
                     'basicInfo'=>$basicInfo,
                 ];

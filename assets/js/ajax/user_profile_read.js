@@ -26,7 +26,7 @@ $(document).ready(function() {
 			data: "user_id="+user_id,
 			type: 'get',
 			success: function(response) {
-				console.log(response);
+				// console.log(response);
 				if (response=="")
 				{
 					swal('Please Login First to open profile page !', ': [', 'warning').then((value) => {
@@ -43,11 +43,7 @@ $(document).ready(function() {
 						email = response.result['basicInfo']['email'];
 						var phone = response.result['basicInfo']['phone'];
 						var address = response.result['basicInfo']['address'];
-						
-						console.log(phone,address);
-						
-	                
-						
+										
 						// document.getElementById('user_id').innerHTML = '<b>NU ID</b> : ' + id;
 						// document.getElementById('user_name').innerHTML = '<b>Name</b> : ' + name;
 						// document.getElementById('user_email').innerHTML = '<b>Email</b> : ' + email;
