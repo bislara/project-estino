@@ -4,6 +4,7 @@
       // in place of a google.maps.LatLng object.
       console.log(lat,lon)
       var map;
+
       function initialize() {
         var mapOptions = {
           zoom: 12,
@@ -55,17 +56,25 @@
                  
                 // if marker contains HTML, add it to an infoWindow
                 // create info window
-                   const infowindow = new google.maps.InfoWindow({
-                        content     : '<p>Marker Location: </p>'
-                    });
+                
+                   //  google.maps.event.addListener(marker[i], 'mouseover', () => {
+                   //    console.log("Inside hover function");
 
-                    google.maps.event.addListener(marker[i], 'mouseover', () => {
-                        infowindow.open(map, marker[i])
-                    });
+                   //      infowindow.open(map, marker[i])
+                   //  });
 
-                    google.maps.event.addListener(marker[i], 'mouseout', () => {
-                        infowindow.close(map, marker[i])
-                    });
+                   var infowindow = new google.maps.InfoWindow();  
+                    google.maps.event.addListener(marker[i], 'click', (function(marker,i) {  
+                               return function() {  
+                                   var content = '<p>Marker Location:' + marker.getPosition() + '</p>';  
+                                   infowindow.setContent(content);  
+                                   infowindow.open(map, marker);  
+                               }  
+                             })(marker[i],i));  
+
+                    // google.maps.event.addListener(marker[i], 'mouseout', () => {
+                    //     infowindow.close(map, marker[i])
+                    // });
 
 
                     // show info window when marker is clicked
@@ -97,3 +106,30 @@
 
       // (20.344627, 85.909836) (20.324024, 85.843874)
        // For a 10 km query, you would use a margin of 10 / 111 = 0.09009 degrees of latitude or longitude.
+
+       // var markerCount = 0; var map; //Initializes the map… 
+       // function initialize() 
+       // {
+       //  var myLatlng = new google.maps.LatLng(46.855141, -96.8372664);
+       //   var map_canvas = document.getElementById('map_canvas'); 
+       //   var map_options = { center: myLatlng, zoom: 5, mapTypeId: google.maps.MapTypeId.ROADMAP }
+       //    map = new google.maps.Map(map_canvas, map_options); 
+       //    } //When the window is loaded, run the initialize function to //setup the map 
+       //  google.maps.event.addDomListener(window, 'load', initialize);
+       //   //This function will add a marker to the map each time it //is called. It takes latitude, longitude, and html markup //for the content you want to appear in the info window //for the marker. 
+       //  function addMarkerToMap(lat, long, htmlMarkupForInfoWindow)
+       //  {
+       //   var infowindow = new google.maps.InfoWindow();
+       //    var myLatLng = new google.maps.LatLng(lat, long);
+       //     var marker = new google.maps.Marker({
+       //      position: myLatLng,
+       //      map: map, 
+       //      animation: google.maps.Animation.DROP, }); //Gives each marker an Id for the on click markerCount++; //Creates the event listener for clicking the marker //and places the marker on the map 
+       //     google.maps.event.addListener(marker, 'click', (function(marker, markerCount) 
+       //     {
+       //      return function() 
+       //      {
+       //       infowindow.setContent(htmlMarkupForInfoWindow); infowindow.open(map, marker); 
+       //      } 
+       //      })
+       //      (marker, markerCount)); //Pans map to the new location of the marker map.panTo(myLatLng) } 
