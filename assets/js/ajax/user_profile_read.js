@@ -17,6 +17,7 @@ var name = "";
 var email = "";
 var lat = 0;
 var lon = 0;
+var rent_mode = 0;
 $(document).ready(function() {
 
 	  if(user_id)
@@ -47,7 +48,9 @@ $(document).ready(function() {
 						var address = response.result['basicInfo']['address'];
 						lat = response.result['basicInfo']['gps_details']["1"][0]			
 						lon = response.result['basicInfo']['gps_details']["1"][1]			
+						rent_mode = response.result['basicInfo']['rent_mode'];
 						console.log(lat,lon)
+
 
 						var script = document.createElement('script');
              			script.src = '../assets/js/ajax/map/google_map.js';
