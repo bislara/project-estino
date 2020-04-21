@@ -53,7 +53,7 @@
 			$login_type = mysqli_real_escape_string($conn, $login_type);
         	
 
-			$q = "INSERT INTO users (name, picture, login_id , email, login_type) VALUES('".$name."','".$picture."','".$login_id."','".$email."','".$login_type."')";
+			$q = "INSERT INTO users (name, login_id , email, login_type) VALUES('".$name."','".$login_id."','".$email."','".$login_type."')";
 
 			$query = mysqli_query($conn, $q);
 

@@ -12,7 +12,7 @@ $(document).ready(function() {
 	   {
 		
 		$.ajax({
-			url: '../apis/user/auth/profile.php',
+			url: '../apis/user/auth/profile_details.php',
 			data: "user_id="+user_id,
 			type: 'get',
 			success: function(response) {
@@ -33,8 +33,6 @@ $(document).ready(function() {
 						email = response.result['basicInfo']['email'];
 						var phone = response.result['basicInfo']['phone'];
 						var address = response.result['basicInfo']['address'];
-						lat = response.result['basicInfo']['gps_details']["1"][0]			
-						lon = response.result['basicInfo']['gps_details']["1"][1]			
 						rent_mode = response.result['basicInfo']['rent_mode'];
 						console.log(lat,lon)
 						console.log(rent_mode)
@@ -64,30 +62,20 @@ $(document).ready(function() {
 						}
 						else
 						{
-							$(".profile_img").attr("src","../assets/images/profile_images/"+response.result['basicInfo']['picture']);
+							$(".profile_img").attr("src",response.result['basicInfo']['picture']);
 						}
 
 
 						
 						
 				}
-				else if (response.status == 'failure' && response.result =="update_profile") {
-					swal('Please Update Profile to use the app !', ': [', 'warning').then((value) => {
-                          window.location = './user_profile.html?id='+user_id;
-					});
-				}
-
 				else if (response.status == 'failure') {
 					swal('Please Login First to open profile page !', ': [', 'warning').then((value) => {
 						window.location = './register_login.html';
 					});
 				}
 				else
-				{
-					swal('Please Login First to open profile page !', ': [', 'warning').then((value) => {
-						window.location = './register_login.html';
-					});
-				}
+					console.log("Some error happenned.")
 				}
 				
 			},
@@ -121,6 +109,9 @@ $('#signoutBtn').click(()=>{
         success:(response)=>{
 			response=JSON.parse(response);
 			swal("Logged out!", "", "success");
+			sessionStorage.removeItem("user_id");
+			sessionStorage.clear();
+
 			window.location='./register_login.html';
         }
     });
@@ -133,3 +124,5 @@ $('.dashboard_link').click(()=>{
 $('.profile_link').click(()=>{
 	window.location='./user_profile.html?id=' + user_id;
 })
+
+"https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=2047436132069314&height=50&width=50&ext=1590092856&hash=AeQu2uPiSt7KnZjO"

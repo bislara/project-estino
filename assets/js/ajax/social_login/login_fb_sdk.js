@@ -74,8 +74,13 @@ function checkLoginState() {
                                 console.log(response);
                                 var response = JSON.parse(response);
                                 if(response.status == "success"){
+
+                                  var user_id = response.message;
+                                  sessionStorage.setItem("user_id", user_id);
+
+
                                   swal('Congrats !', 'You are logged in!', 'success').then((value) => {
-                                      window.location = './profile.html?id='+response.message;
+                                      window.location = './user_profile.html?id='+response.message;
                                     });
 
                                }
@@ -101,8 +106,11 @@ function checkLoginState() {
                                 console.log(response);
                                 var response = JSON.parse(response);
                                 if(response.status == "success"){
+                                  var user_id = response.message;
+                                  sessionStorage.setItem("user_id", user_id);
+
                                   swal('Congrats !', 'You are logged in!', 'success').then((value) => {
-                                      window.location = './profile.html?id='+response.message;
+                                      window.location = './user_profile.html?id='+response.message;
                                     });
 
                                }

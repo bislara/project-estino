@@ -126,6 +126,9 @@ $('#signoutBtn').click(()=>{
         type: 'POST',
         success:(response)=>{
 			response=JSON.parse(response);
+			sessionStorage.removeItem("user_id");
+			sessionStorage.clear();
+
 			swal("Logged out!", "", "success");
 			window.location='./register_login.html';
         }

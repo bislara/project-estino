@@ -57,7 +57,7 @@
 			$login_type = mysqli_real_escape_string($conn, $login_type);
         	
 
-			$q = "INSERT INTO users (name, gender, picture, address, email, login_type,login_id) VALUES('".$name."','".$gender."','".$picture."','".$address."','".$email."','".$login_type."','".$login_id."')";
+			$q = "INSERT INTO users (name, gender, address, email, login_type,login_id) VALUES('".$name."','".$gender."','".$address."','".$email."','".$login_type."','".$login_id."')";
 
 			
 			$query = mysqli_query($conn, $q);
