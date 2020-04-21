@@ -1,16 +1,3 @@
-var url = location.href;
-if (window.location.href.indexOf("?id=") >= 0) {
-	var user_id = url.split("?")[1].split("=")[1];
-	console.log(user_id);
-	sessionStorage.setItem("user_id", user_id);
-}
-else
-{
-	swal('Please Login First to open profile page !', ': [', 'warning').then((value) => {
-	window.location = './register_login.html';
-	});
-}
-
 var paid=-1;
 var id = 0;
 var name = "";
@@ -18,12 +5,12 @@ var email = "";
 var lat = 0;
 var lon = 0;
 var rent_mode = 0;
+var user_id = sessionStorage.getItem("user_id");
 $(document).ready(function() {
 
 	  if(user_id)
 	   {
-
-		//var id=0;
+		
 		$.ajax({
 			url: '../apis/user/auth/profile.php',
 			data: "user_id="+user_id,
@@ -50,8 +37,26 @@ $(document).ready(function() {
 						lon = response.result['basicInfo']['gps_details']["1"][1]			
 						rent_mode = response.result['basicInfo']['rent_mode'];
 						console.log(lat,lon)
+						console.log(rent_mode)
 
 						$(".user_name").append(name);
+						$(".user_email").append(email);
+
+						$("#profile_name").val(name);
+						$("#profile_no").val(phone);
+						$("#profile_gender").val(response.result['basicInfo']['gender']);
+						$("#profile_email").val(email);
+						$("#profile_cycles").val(response.result['basicInfo']['no_cycles']);
+						$("#profile_address").val(address);
+
+						if (rent_mode == "1") 
+						{
+							$("#profile_rent").val("ON");
+						}
+						else
+							$("#profile_rent").val("OFF");
+
+
 
 						if (response.result['basicInfo']['picture'] == '') 
 						{							
@@ -63,16 +68,7 @@ $(document).ready(function() {
 						}
 
 
-						var script = document.createElement('script');
-             			script.src = '../assets/js/ajax/map/google_map.js';
-             			document.body.appendChild(script);
 						
-						// document.getElementById('user_id').innerHTML = '<b>NU ID</b> : ' + id;
-						// document.getElementById('user_name').innerHTML = '<b>Name</b> : ' + name;
-						// document.getElementById('user_email').innerHTML = '<b>Email</b> : ' + email;
-						// document.getElementById('user_phone').innerHTML = '<b>Phone</b> : ' + phone;
-	     //                document.getElementById('user_address').innerHTML = '<b>Address</b> : ' + address;
-
 						
 				}
 				else if (response.status == 'failure' && response.result =="update_profile") {
@@ -117,8 +113,6 @@ $(document).ready(function() {
 });
 
 
-
-
 $('#signoutBtn').click(()=>{
 
 	$.ajax({
@@ -137,5 +131,5 @@ $('.dashboard_link').click(()=>{
 })
 
 $('.profile_link').click(()=>{
-	window.location='./user_profile.html?id=' + id;
+	window.location='./user_profile.html?id=' + user_id;
 })

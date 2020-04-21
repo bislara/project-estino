@@ -25,8 +25,12 @@ $(document).on("click","#signin",function(){
                     console.log(response);
                     var response = JSON.parse(response);
                     if(response.status == "success"){
+
+                      var user_id = response.message;
+                      sessionStorage.setItem("user_id", user_id);
+
                       swal('Congrats !', 'You are logged in!', 'success').then((value) => {
-                          window.location = './profile.html?id='+response.message;
+                          window.location = './user_dashboard.html?id='+user_id;
                         });
 
                    }
@@ -135,7 +139,7 @@ $(document).ready(function(){
                             var response = JSON.parse(response);
                             if(response.status == "success")
                             {
-                                var url='./profile.html?id='+response.message;
+                                var url='./user_dashboard.html?id='+response.message;
                                 swal("successfully registered", ":)", "success");
                                 window.location=url;
                             }
