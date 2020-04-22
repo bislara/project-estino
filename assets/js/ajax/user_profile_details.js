@@ -62,7 +62,7 @@ $(document).ready(function() {
 						}
 						else
 						{
-							$(".profile_img").attr("src",response.result['basicInfo']['picture']);
+							$(".profile_img").attr("src","../assets/images/profile_images/"+response.result['basicInfo']['picture']);
 						}
 
 
@@ -125,4 +125,109 @@ $('.profile_link').click(()=>{
 	window.location='./user_profile.html?id=' + user_id;
 })
 
-"https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=2047436132069314&height=50&width=50&ext=1590092856&hash=AeQu2uPiSt7KnZjO"
+
+$("#img_file").on('change', function() {
+
+	var fd = new FormData();
+	var files = $('#img_file')[0].files[0];
+	fd.append('files',files);
+
+	fd.append('user_id',user_id);
+
+	// console.log(fd);
+	
+	if ($('#img_file').get(0).files.length === 0) {
+    	console.log("No files selected");
+        swal("No file selected", "", "error");	
+	}
+	else
+	{
+		$.ajax({
+			url: '../apis/user/auth/upload_photo.php',
+			data: fd,
+			type: 'POST',
+			contentType: false, 
+            processData: false, 
+			success: function(response){
+				console.log(response);
+				var response = JSON.parse(response);
+				if(response.status == 'success'){
+
+					 swal('Profile Picture Updated!!', '', 'success').then((value) => {
+	                          location.reload();
+	                        });
+				}
+				else{
+					var error_string = "";
+					for (var i = 0; i < response.result.length; i++) {
+          				error_string += response.result[i];
+          				error_string += "\n"
+          			}
+	                   swal(error_string, "", "error");
+
+				}
+			}
+		});
+		return false;
+	}
+	return false;
+});
+
+
+        $('#signup').on('click', function(){ 
+          
+          
+            var e = document.getElementById("gender");
+            var gender = e.options[e.selectedIndex].value;
+
+            if ($("#name").val() == "" || $("#phone").val() == "" || $("#no_cycles").val() == "" || $("#address").val() == "" || $("#gender").val() == "" || $("#password").val() == "" || $("#cpassword").val() == "" ) 
+            {
+              $("#error").html("Enter all the details");
+              $("#good").html("");
+
+              myFunction();
+            }
+            else
+            {
+
+              var user_data="name="+$("#name").val()+"&gender="+gender+"&phone="+$("#phone").val()+"&no_cycles="+$('#no_cycles').val()+"&address="+$("#address").val()+"&email="+$("#email").val()+"&password="+$("#password").val()+"&referal_no="+$("#referal_no").val();
+
+              if($("#password").val() != $("#cpassword").val())
+                {
+                    // $("#error").html("<div style=\"color:#ff6666;height:40px;padding : 10px;\"><center><strong>Confirm your password</center></strong></div>");
+                  $("#error").html("Confirm your password");
+                  $("#good").html("");
+
+                  myFunction();
+                }
+                else
+                {
+                    $.ajax({
+                        url: '../apis/user/auth/registration.php',
+                        data:user_data,
+                        type: 'post',
+                        success: function(response) {
+                            console.log(response)
+                            console.log(gender)
+                            var response = JSON.parse(response);
+                            if(response.status == "success")
+                            {
+                                var url='./user_dashboard.html?id='+response.message;
+                                swal("successfully registered", ":)", "success");
+                                window.location=url;
+                            }
+                            else
+                            {
+                                 //swal(response.message, ": [", "warning");
+                                // $("#error").html("<div style=\"color:#ff6666;height:40px;padding : 10px;\"><center><strong>"+response.result+"</center></strong></div>");
+                              $("#error").html(response.result);
+                              $("#good").html("");
+
+                            myFunction();
+                            }
+                       }
+                    });
+                }              
+            }
+          return false;
+        });

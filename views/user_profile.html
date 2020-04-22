@@ -16,6 +16,31 @@
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="../assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+  <style>
+    .upload-btn-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    /*.btn {
+      border: 2px solid gray;
+      color: gray;
+      background-color: white;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+*/
+    .upload-btn-wrapper input[type=file] {
+      font-size: 5vw;
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+    }
+  </style>
   
 </head>
 
@@ -128,9 +153,19 @@
                   
               </div>
               <div class="card-footer">
-                <div class="button-container">
+                <div class="upload-btn-wrapper button-container">
+                  <center>
+                  <!-- <button class="btn">Upload a file</button>
+                  <input type="file" name="myfile" /> -->
                   <button type="" class="btn btn-fill btn-primary">Change Profile Picture</button>
+                  <input type="file" id="img_file" name="myfile" />
+                  </center>
                 </div>
+
+                <!-- <div class="button-container">
+                  <button type="" class="btn btn-fill btn-primary">Change Profile Picture</button>
+                  <input type="file" name="myfile">
+                </div> -->
               </div>
             </div>
           </div>
