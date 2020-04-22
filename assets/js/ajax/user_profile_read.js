@@ -46,8 +46,16 @@ $(document).ready(function() {
 						email = response.result['basicInfo']['email'];
 						var phone = response.result['basicInfo']['phone'];
 						var address = response.result['basicInfo']['address'];
-						lat = response.result['basicInfo']['gps_details']["1"][0]			
-						lon = response.result['basicInfo']['gps_details']["1"][1]			
+						if (response.result['basicInfo']['no_cycles']!=0)
+						{
+							lat = response.result['basicInfo']['gps_details']["1"][0];			
+							lon = response.result['basicInfo']['gps_details']["1"][1];	
+							var script = document.createElement('script');
+	             			script.src = '../assets/js/ajax/map/google_map.js';
+	             			document.body.appendChild(script);		
+						}
+						else
+							console.log("No cycles")
 						rent_mode = response.result['basicInfo']['rent_mode'];
 						console.log(lat,lon)
 
@@ -63,9 +71,6 @@ $(document).ready(function() {
 						}
 
 
-						var script = document.createElement('script');
-             			script.src = '../assets/js/ajax/map/google_map.js';
-             			document.body.appendChild(script);
 						
 						// document.getElementById('user_id').innerHTML = '<b>NU ID</b> : ' + id;
 						// document.getElementById('user_name').innerHTML = '<b>Name</b> : ' + name;

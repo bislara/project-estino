@@ -63,7 +63,7 @@ else if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id']) && isset($
                     $basicInfo = mysqli_fetch_array($query,MYSQLI_ASSOC);           
                 }
  
-                if ($basicInfo["phone"] === "" || $basicInfo["address"] === "" || $basicInfo["gender"] === "" || $basicInfo["no_cycles"] ==="0") {
+                if ($basicInfo["phone"] === "" || $basicInfo["address"] === "" || $basicInfo["gender"] === "" || $basicInfo["no_cycles"] ==="") {
                     # code...
                     echo json_encode(array('status' => 'failure', 'result' => 'update_profile'));
 

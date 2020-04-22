@@ -34,8 +34,8 @@ $(document).ready(function() {
 						var phone = response.result['basicInfo']['phone'];
 						var address = response.result['basicInfo']['address'];
 						rent_mode = response.result['basicInfo']['rent_mode'];
-						console.log(lat,lon)
-						console.log(rent_mode)
+						console.log(lat,lon);
+						console.log(rent_mode);
 
 						$(".user_name").append(name);
 						$(".user_email").append(email);
@@ -173,61 +173,105 @@ $("#img_file").on('change', function() {
 	return false;
 });
 
-
-        $('#signup').on('click', function(){ 
-          
-          
-            var e = document.getElementById("gender");
-            var gender = e.options[e.selectedIndex].value;
-
-            if ($("#name").val() == "" || $("#phone").val() == "" || $("#no_cycles").val() == "" || $("#address").val() == "" || $("#gender").val() == "" || $("#password").val() == "" || $("#cpassword").val() == "" ) 
-            {
-              $("#error").html("Enter all the details");
+$("#profile_no").focusout(function(){
+            var phone=$("#profile_no").val();
+            if(phone.length != 10){
+              $("#error").html("Not a valid phone number");
               $("#good").html("");
+              $("#update_btn").prop('disabled', true);
+            }
+            else{
+              $("#good").html("Valid phone number");
+              $("#error").html("");
+              $("#update_btn").prop('disabled', false);
+            }   
+        });
 
-              myFunction();
+
+        $("#profile_email").focusout(function(){
+            var email_check=$("#profile_email").val();
+            var atpos = email_check.indexOf("@");
+            var dotpos = email_check.lastIndexOf(".");  
+            var link_email = "email="+email_check;
+            if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email_check.length) {
+                // $("#error").html("<div style=\"color:#ff6666;height:40px;padding : 10px;\"><center><strong>Not a valid email address</center></strong></div>");
+                $("#error").html("Not a valid email address");
+                $("#good").html("");
+	            $("#update_btn").prop('disabled', true);
+                   
+              return false;
+            }
+            else{
+                $.ajax({
+                url: '../apis/user/auth/check_email.php',
+                type: 'post',
+                data:link_email,
+                    success: function(response) {
+                    console.log(email_check,email);
+                    if (email_check == email) 
+                    {
+                    	$("#error").html("");
+                    	$("#good").html("");
+	            		$("#update_btn").prop('disabled', false);	
+                    }
+                    else if (response == "<div style=\"color:green;height:40px;padding : 10px;margin-top:auto;margin-bottom:auto;\"><center><strong>You can signup using this email id.<strong></center></div><script>$(\"#signup\").removeClass(\"disabled\");$(\"#signup\").addClass(\"active\");</script>") 
+                    {
+						$("#error").html("");
+                    	$("#good").html("Valid Email ID");
+	            		$("#update_btn").prop('disabled', false);
+                    }
+                    else
+                    {
+						$("#error").html("Email Id already exists");
+                    	$("#good").html("");
+	            		$("#update_btn").prop('disabled', true);                    	
+                    }
+                    
+                    }
+                });
+            }
+        });
+
+
+
+        $('#update_btn').on('click', function(){ 
+          
+          
+            if ($("#profile_name").val() == "" || $("#profile_no").val() == "" || $("#profile_cycles").val() == "" || $("#profile_address").val() == "" || $("#profile_gender").val() == "" || $("#profile_rent").val() == "") 
+            {
+	          swal("Enter required details", "", "error");              
             }
             else
             {
+             
+            var e = document.getElementById("profile_gender");
+            var gender = e.options[e.selectedIndex].value;
 
-              var user_data="name="+$("#name").val()+"&gender="+gender+"&phone="+$("#phone").val()+"&no_cycles="+$('#no_cycles').val()+"&address="+$("#address").val()+"&email="+$("#email").val()+"&password="+$("#password").val()+"&referal_no="+$("#referal_no").val();
+            var user_data="user_id="+user_id+"&name="+$("#profile_name").val()+"&gender="+gender+"&phone="+$("#profile_no").val()+"&no_cycles="+$('#profile_cycles').val()+"&address="+$("#profile_address").val()+"&email="+$("#profile_email").val()+"&rent_mode=" + $("#profile_rent").val();
 
-              if($("#password").val() != $("#cpassword").val())
-                {
-                    // $("#error").html("<div style=\"color:#ff6666;height:40px;padding : 10px;\"><center><strong>Confirm your password</center></strong></div>");
-                  $("#error").html("Confirm your password");
-                  $("#good").html("");
-
-                  myFunction();
-                }
-                else
-                {
-                    $.ajax({
-                        url: '../apis/user/auth/registration.php',
+             	$.ajax({
+                        url: '../apis/user/auth/update_profile.php',
                         data:user_data,
                         type: 'post',
                         success: function(response) {
-                            console.log(response)
-                            console.log(gender)
+                            // console.log(response)
                             var response = JSON.parse(response);
                             if(response.status == "success")
                             {
                                 var url='./user_dashboard.html?id='+response.message;
-                                swal("successfully registered", ":)", "success");
-                                window.location=url;
+                                swal('Profile Updated!!', '', 'success').then((value) => {
+	                          		window.location = url;
+	                        	});
                             }
                             else
                             {
                                  //swal(response.message, ": [", "warning");
-                                // $("#error").html("<div style=\"color:#ff6666;height:40px;padding : 10px;\"><center><strong>"+response.result+"</center></strong></div>");
                               $("#error").html(response.result);
                               $("#good").html("");
-
-                            myFunction();
                             }
                        }
                     });
-                }              
+                            
             }
           return false;
         });
