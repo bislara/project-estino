@@ -12,7 +12,6 @@
 
                 $nu_id = $_SESSION['nu_id'];
                 $basicInfo=[];
-                $certificates=[];
                 //basicInfo
                 $query = mysqli_query($conn, "SELECT nu_id,name FROM users where nu_id ='".$nu_id."'");
                 if (mysqli_num_rows($query) == 0) {
@@ -21,16 +20,9 @@
                     $basicInfo = mysqli_fetch_array($query,MYSQLI_ASSOC);           
                 }
  
-                //Certificate
-                /*$query = mysqli_query($conn, "SELECT img_path FROM certificate where inno_id ='".$inno_id."'");
-                if (mysqli_num_rows($query) == 1) {
-                    $certificates = mysqli_fetch_array($query,MYSQLI_ASSOC);            
-                } */
-
 
                 $result = (object) [
                     'basicInfo'=>$basicInfo,
-                    //'certificates'=>$certificates
                 ];
                 echo json_encode(array('status' => 'success', 'result' => $result));
 

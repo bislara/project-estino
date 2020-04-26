@@ -66,7 +66,7 @@
                    var infowindow = new google.maps.InfoWindow();  
                     google.maps.event.addListener(marker[i], 'click', (function(marker,i) {  
                                return function() {  
-                                   var content = '<p>Marker Location:' + marker.getPosition() + '</p>';  
+                                   var content = '<p style= "color:black;">Marker Location:' + marker.getPosition() + '</p>';  
                                    infowindow.setContent(content);  
                                    infowindow.open(map, marker);  
                                }  
@@ -94,7 +94,7 @@
         // we retrieve the marker's position using the
         // google.maps.LatLng.getPosition() method.
         var user_infowindow = new google.maps.InfoWindow({
-          content: '<p>Marker Location:' + user_marker.getPosition() + '</p>'
+          content: '<p style= "color:black;">Marker Location:' + user_marker.getPosition() + '</p>'
         });
 
         google.maps.event.addListener(user_marker, 'click', function() {

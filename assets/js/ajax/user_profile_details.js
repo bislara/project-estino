@@ -251,7 +251,7 @@ $("#profile_no").focusout(function(){
 
              	$.ajax({
                         url: '../apis/user/auth/update_profile.php',
-                        data:user_data,
+                        data:{user_id:user_id , name:$("#profile_name").val() , gender : gender,phone:$("#profile_no").val(), no_cycles : $("#profile_cycles").val(), address : $("#profile_address").val(), email: $("#profile_email").val(), rent_mode : $("#profile_rent").val()},
                         type: 'post',
                         success: function(response) {
                             // console.log(response)
