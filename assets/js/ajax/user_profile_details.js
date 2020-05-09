@@ -6,6 +6,7 @@ var lat = 0;
 var lon = 0;
 var rent_mode = 0;
 var user_id = sessionStorage.getItem("user_id");
+var cycle_no = 0;
 $(document).ready(function() {
 
 	  if(user_id)
@@ -47,6 +48,7 @@ $(document).ready(function() {
 						$("#profile_cycles").val(response.result['basicInfo']['no_cycles']);
 						$("#profile_address").val(address);
 
+						cycle_no = response.result['basicInfo']['no_cycles'];
 						if (rent_mode == "1") 
 						{
 							$("#profile_rent").val("ON");
@@ -66,6 +68,37 @@ $(document).ready(function() {
 						}
 
 
+						$.ajax({
+					        url: '../apis/user/cycle_id/get_ids.php',
+					        data : {user_id:user_id , user_name :name , email:email},     
+					        type: 'POST',
+					        success:(response)=>{
+					        	// console.log(response);
+								response=JSON.parse(response);
+								if(response.status == 'success'){
+
+									 var data_arr = response.result;
+							         var temp="";
+							         for (var i = 0; i < data_arr.length; i++) {
+							                    
+							                    temp = temp + (i+1) + ". " +  data_arr[i].cycle_id + '<br>';
+
+							              }
+							        	// console.log(temp);
+							        	if(data_arr.length==0)
+							        	{
+							        		temp = "None"
+							        	}
+
+							          $('#cycle_id_content').append(temp);
+								}
+								else
+								{
+
+								}
+
+					        }
+					    });
 						
 						
 				}
@@ -101,6 +134,8 @@ $(document).ready(function() {
 });
 
 
+
+
 $('#signoutBtn').click(()=>{
 
 	$.ajax({
@@ -116,6 +151,34 @@ $('#signoutBtn').click(()=>{
         }
     });
 })
+
+
+$('#request_btn').click(()=>{
+
+	if(user_id==0 || user_id =="" || email =="" )
+	    swal("Invalid Email or user ID", "Please login again!", "error");              
+	else{
+	$.ajax({
+        url: '../apis/user/cycle_id/request.php',
+        data : {user_id:user_id , user_name :name , email:email},     
+        type: 'POST',
+        success:(response)=>{
+        	console.log(response);
+			response=JSON.parse(response);
+			if(response.status == 'success'){
+				swal("Request Sent!", "", "success");
+			}
+			else
+			{
+	          swal(response.result, "", "error");              
+			}
+
+        }
+    });
+    return false;
+	}
+})
+
 
 $('.dashboard_link').click(()=>{
 	window.location='./user_dashboard.html?id=' + user_id;
@@ -236,7 +299,13 @@ $("#profile_no").focusout(function(){
 
         $('#update_btn').on('click', function(){ 
           
-          
+          	if (cycle_no!=$("#profile_cycles").val())
+          	{
+	          swal("Cannot change no of cycles", "", "error");              
+          	}
+
+          	else
+          	{
             if ($("#profile_name").val() == "" || $("#profile_no").val() == "" || $("#profile_cycles").val() == "" || $("#profile_address").val() == "" || $("#profile_gender").val() == "" || $("#profile_rent").val() == "") 
             {
 	          swal("Enter required details", "", "error");              
@@ -273,5 +342,8 @@ $("#profile_no").focusout(function(){
                     });
                             
             }
+        }
           return false;
         });
+
+

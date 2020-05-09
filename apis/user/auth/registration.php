@@ -5,11 +5,9 @@
 	$name = $_POST["name"];
 	$gender = $_POST["gender"];
 	$phone = $_POST["phone"];
-	$no_cycles = $_POST["no_cycles"];
 	$address = $_POST["address"];
 	$email = $_POST["email"];
 	$password = $_POST["password"];
-	$referal_no = $_POST["referal_no"];
 
 
 	function validateName($name) {
@@ -112,7 +110,7 @@
 	// 	}
 	// }
 
-	if ( isset($name) && isset($gender) && isset($phone) && isset($address) && isset($email) && isset($no_cycles) && isset($password) && isset($referal_no)) {
+	if ( isset($name) && isset($gender) && isset($phone) && isset($address) && isset($email) && isset($password) ) {
 		// /echo'<script>HIIIIIII</script>';
 		//validateEmail($email);
 		//validatePassword($password);
@@ -124,15 +122,10 @@
 			$phone = mysqli_real_escape_string($conn, $phone);
 			$address = mysqli_real_escape_string($conn, $address);
 			$email = mysqli_real_escape_string($conn, $email);
-        	$no_cycles = mysqli_real_escape_string($conn, $no_cycles);
-			$password = mysqli_real_escape_string($conn, md5($password));
-			if ($referal_no == "") {
-				$referal_no = 0;
-			}
-
+        	$password = mysqli_real_escape_string($conn, md5($password));
 			
 
-			$q = "INSERT INTO users (name, gender, phone, address, email, no_cycles, user_password,referal_no) VALUES('".$name."','".$gender."','".$phone."','".$address."','".$email."','".$no_cycles."','".$password."','".$referal_no."')";
+			$q = "INSERT INTO users (name, gender, phone, address, email, user_password) VALUES('".$name."','".$gender."','".$phone."','".$address."','".$email."','".$password."')";
 
 			
 			$query = mysqli_query($conn, $q);

@@ -107,7 +107,7 @@ $(document).ready(function(){
             var e = document.getElementById("gender");
             var gender = e.options[e.selectedIndex].value;
 
-            if ($("#name").val() == "" || $("#phone").val() == "" || $("#no_cycles").val() == "" || $("#address").val() == "" || $("#gender").val() == "" || $("#password").val() == "" || $("#cpassword").val() == "" ) 
+            if ($("#name").val() == "" || $("#phone").val() == "" || $("#address").val() == "" || $("#gender").val() == "" || $("#password").val() == "" || $("#cpassword").val() == "" ) 
             {
               $("#error").html("Enter all the details");
               $("#good").html("");
@@ -117,7 +117,7 @@ $(document).ready(function(){
             else
             {
 
-              var user_data="name="+$("#name").val()+"&gender="+gender+"&phone="+$("#phone").val()+"&no_cycles="+$('#no_cycles').val()+"&address="+$("#address").val()+"&email="+$("#email").val()+"&password="+$("#password").val()+"&referal_no="+$("#referal_no").val();
+              var user_data="name="+$("#name").val()+"&gender="+gender+"&phone="+$("#phone").val()+"&address="+$("#address").val()+"&email="+$("#email").val()+"&password="+$("#password").val();
 
               if($("#password").val() != $("#cpassword").val())
                 {
