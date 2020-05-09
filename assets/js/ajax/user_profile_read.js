@@ -61,6 +61,7 @@ $(document).ready(function() {
 						console.log(lat,lon)
 
 						$(".user_name").append(name);
+						$("#distance_travel").append(response.result['basicInfo']['distance_travelled'] + " Kms");
 
 						if (response.result['basicInfo']['picture'] == '') 
 						{							
