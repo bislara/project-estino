@@ -49,7 +49,8 @@ $(document).ready(function() {
 						if (response.result['basicInfo']['no_cycles']!=0)
 						{
 							lat = response.result['basicInfo']['gps_details']["1"][0];			
-							lon = response.result['basicInfo']['gps_details']["1"][1];	
+							lon = response.result['basicInfo']['gps_details']["1"][1];
+
 							var script = document.createElement('script');
 	             			script.src = '../assets/js/ajax/map/google_map.js';
 	             			document.body.appendChild(script);		
@@ -69,15 +70,6 @@ $(document).ready(function() {
 						{
 							$(".profile_img").attr("src","../assets/images/profile_images/"+response.result['basicInfo']['picture']);
 						}
-
-
-						
-						// document.getElementById('user_id').innerHTML = '<b>NU ID</b> : ' + id;
-						// document.getElementById('user_name').innerHTML = '<b>Name</b> : ' + name;
-						// document.getElementById('user_email').innerHTML = '<b>Email</b> : ' + email;
-						// document.getElementById('user_phone').innerHTML = '<b>Phone</b> : ' + phone;
-	     //                document.getElementById('user_address').innerHTML = '<b>Address</b> : ' + address;
-
 						
 				}
 				else if (response.status == 'failure' && response.result =="update_profile") {

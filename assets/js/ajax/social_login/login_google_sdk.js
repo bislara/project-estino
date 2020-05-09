@@ -17,8 +17,8 @@
     // 'scope' field specifies space-delimited list of access scopes.
     gapi.client.init({
         'apiKey': 'AIzaSyCHGhMCa6zPgqfYMY0BMvfVW1ld5wkBnN8',
-      	'clientId': '231052077169-fr1vuf8j3qnqldsjffljav5rbqaacgkf.apps.googleusercontent.com',
-      	'discoveryDocs': [discoveryUrl],
+        'clientId': '231052077169-fr1vuf8j3qnqldsjffljav5rbqaacgkf.apps.googleusercontent.com',
+        'discoveryDocs': [discoveryUrl],
         'scope': SCOPE
     }).then(function () {
       GoogleAuth = gapi.auth2.getAuthInstance();
@@ -28,8 +28,8 @@
 
       // Handle initial sign-in state. (Determine if user is already signed in.)
       var user = GoogleAuth.currentUser.get();
-      setSigninStatus();
-      console.log("All ready inside google..")
+      GoogleAuth.signOut();
+      console.log("All ready inside google..");
       // Call handleAuthClick function when user clicks on
       //      "Sign In/Authorize" button.
       $('#google_btn').click(function() {
@@ -61,31 +61,18 @@
     var user = GoogleAuth.currentUser.get();
     var isAuthorized = user.hasGrantedScopes(SCOPE);
     if (isAuthorized) {
+    var profile;
+      if (GoogleAuth.isSignedIn.get()) {
+      var user2 = GoogleAuth.currentUser.get();
+      profile = user2.getBasicProfile();
+      console.log('ID: ' + profile.getId());
+      console.log('Full Name: ' + profile.getName());
+      console.log('Given Name: ' + profile.getGivenName());
+      console.log('Family Name: ' + profile.getFamilyName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
+    }
 
-    	if (GoogleAuth.isSignedIn.get()) {
-		  var user2 = GoogleAuth.currentUser.get()
-		  var profile = user2.getBasicProfile();
-		  console.log('ID: ' + profile.getId());
-		  console.log('Full Name: ' + profile.getName());
-		  console.log('Given Name: ' + profile.getGivenName());
-		  console.log('Family Name: ' + profile.getFamilyName());
-		  console.log('Image URL: ' + profile.getImageUrl());
-		  console.log('Email: ' + profile.getEmail());
-		}
-
-		// var options = new gapi.auth2.SigninOptionsBuilder(
-		//         {'scope': 'email https://www.googleapis.com/auth/user.birthday.read'});
-
-
-		// user2.grant(options).then(
-		//     function(success){
-		//       console.log(JSON.stringify({message: "success", value: success}));
-		//     },
-		//     function(fail){
-		//       alert(JSON.stringify({message: "fail", value: fail}));
-		//     });
-
-		 
 
       var email = profile.getEmail();
       var atpos = email.indexOf("@");
@@ -121,9 +108,9 @@
                                }
                               else if(response.status=="failure"){
                                 //swal(response.result, ": [", "warning");
-                                console.log(response.result)
+                                console.log(response.result);
                                swal("Unable to login! Please try again", "", "error");
-                               window.location.reload();
+                              window.location.reload();
                               }
 
                             }
@@ -154,9 +141,9 @@
                                }
                               else if(response.status=="failure"){
                                 //swal(response.result, ": [", "warning");
-                                console.log(response.result)
+                                console.log(response.result);
                                swal("Unable to login! Please try again", "", "error");
-                               window.location.reload();
+                              window.location.reload();
 
                               }
 
@@ -170,17 +157,9 @@
 
 
 
-      // $('#sign-in-or-out-button').html('Sign out');
-      // $('#revoke-access-button').css('display', 'inline-block');
-      // $('#auth-status').html('You are currently signed in and have granted ' +
-      //     'access to this app.');
     } 
     else {
-      console.log("Unable to login or the user has declined to accept")
-      // $('#sign-in-or-out-button').html('Sign In/Authorize');
-      // $('#revoke-access-button').css('display', 'none');
-      // $('#auth-status').html('You have not authorized this app or you are ' +
-      //     'signed out.');
+      console.log("Unable to login or the user has declined to accept");
     }
   }
 
