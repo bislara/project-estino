@@ -8,6 +8,16 @@
 	<link rel="stylesheet" href="../assets/css/style.css">
 	<link rel="stylesheet" href="../assets/css/register.css">
 	<title>LOGIN || REGISTER </title>
+	<link rel="manifest" href="../manifest.json">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Estinno Energy">
+  <meta name="description" content="Web app by Estinno Energy">
+  <meta name="theme-color" content="#2F3BA2" />
+  
+  <link rel="apple-touch-icon" href="../assets/images/icons/icon-152x152.jpg">
+  
 </head>
 <body>
 	<div class="containerF" id="containerF">
@@ -96,6 +106,28 @@
         onreadystatechange="if (this.readyState === 'complete') this.onload()">
 	</script>
     <script src="../assets/js/ajax/login_registration.js"></script>
-	
+	  <script>
+    if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('../sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+//     if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', () => {
+//     navigator.serviceWorker.register('../service-worker.js')
+//         .then((reg) => {
+//           console.log('Service worker registered.', reg);
+//         });
+//   });
+// }
+
+  </script>
+
 </body>
 </html>

@@ -4,11 +4,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
     DASHBOARD
   </title>
+  <link rel="manifest" href="../manifest.json">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Estinno Energy">
+  <meta name="description" content="Web app by Estinno Energy">
+  <meta name="theme-color" content="#2F3BA2" />
+  
+  <link rel="apple-touch-icon" href="../assets/images/icons/icon-152x152.jpg">
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -31,7 +39,7 @@
 <!--           <a href="javascript:void(0)" class="simple-text logo-normal">
             ESTINO ENERGY
           </a> -->
-            <img class="sidebar_logo" alt="..." src="../assets/images/estino_logo.jpeg" >
+            <img class="sidebar_logo" alt="logo" src="../assets/images/estino_logo.jpeg" >
 
         </center>
         </div>
@@ -70,7 +78,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <!-- <img class="" alt="..." src="../assets/images/estino_logo.jpeg" style="    height: 8vh;   width: 18vw;" > -->
+            <!-- <img class="" alt="logo" src="../assets/images/estino_logo.jpeg" style="    height: 8vh;   width: 18vw;" > -->
 
             <a class="navbar-brand" href="javascript:void(0)"> DASHBOARD PAGE </a>
           </div>
@@ -168,7 +176,7 @@
   <script src="../assets/js/sweetalert/sweetalert.js"></script>
 
   <script src="../assets/js/ajax/user_profile_read.js"></script>
-  
+
   <script>
     $(document).ready(function() {
       $().ready(function() {
@@ -200,6 +208,28 @@
 
       });
     });
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('../sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+//     if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', () => {
+//     navigator.serviceWorker.register('../service-worker.js')
+//         .then((reg) => {
+//           console.log('Service worker registered.', reg);
+//         });
+//   });
+// }
+
   </script>
   
 </body>
