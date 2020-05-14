@@ -15,9 +15,15 @@
   <meta name="apple-mobile-web-app-title" content="Estinno Energy">
   <meta name="description" content="Web app by Estinno Energy">
   <meta name="theme-color" content="#2F3BA2" />
-  
+
   <link rel="apple-touch-icon" href="../assets/images/icons/icon-152x152.jpg">
-  
+  <style>
+      .add-button {
+  position: absolute;
+  top: 8vh;
+  /*left: 1px;*/
+}
+  </style>
 </head>
 <body>
 	<div class="containerF" id="containerF">
@@ -80,13 +86,17 @@
 		<div class="overlay-container">
 			<div class="overlayR">
 				<div class="overlay-panel overlay-left">
-				    <img class="profile_img" alt="..." src="../assets/images/estino_logo.jpeg" style="height: 26vh;" ><br>
+				    <!--<button class="add-button ghost">Add to home screen</button>-->
+
+				    <img class="profile_img" alt="logo" src="../assets/images/estino_logo.jpeg" style="height: 26vh;" ><br>
 					<h1>Welcome Back!</h1>
 					<p>To keep connected with us please login with your personal info</p>
 					<button class="ghost" id="signIn">Sign In</button>
 				</div>
 				<div class="overlay-panel overlay-right">
-				    <img class="profile_img" alt="..." src="../assets/images/estino_logo.jpeg" style="height: 26vh;" ><br>
+				    <button class="add-button ghost">Add to home screen</button>
+
+				    <img class="profile_img" alt="logo" src="../assets/images/estino_logo.jpeg" style="height: 26vh;" ><br>
 					<h1>Hello, Welcome!</h1>
 					<p>Enter your personal details and start journey with us</p>
 					<button class="ghost" id="signUp">Sign Up</button>
@@ -106,7 +116,7 @@
         onreadystatechange="if (this.readyState === 'complete') this.onload()">
 	</script>
     <script src="../assets/js/ajax/login_registration.js"></script>
-	  <script>
+	<script>
     if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('../sw.js').then(function(registration) {
@@ -128,6 +138,36 @@
 // }
 
   </script>
+  <script>
+      let deferredPrompt;
+const addBtn = document.querySelector('.add-button');
+addBtn.style.display = 'none';
 
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent Chrome 67 and earlier from automatically showing the prompt
+  e.preventDefault();
+  // Stash the event so it can be triggered later.
+  deferredPrompt = e;
+  // Update UI to notify the user they can add to home screen
+  addBtn.style.display = 'block';
+
+  addBtn.addEventListener('click', (e) => {
+    // hide our user interface that shows our A2HS button
+    addBtn.style.display = 'none';
+    // Show the prompt
+    deferredPrompt.prompt();
+    // Wait for the user to respond to the prompt
+    deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the A2HS prompt');
+        } else {
+          console.log('User dismissed the A2HS prompt');
+        }
+        deferredPrompt = null;
+      });
+  });
+});
+
+  </script>
 </body>
 </html>
