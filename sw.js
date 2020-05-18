@@ -6,6 +6,17 @@ var urlsToCache = [
   // '/script/main.js'
 ];
 
+// cache size limit function
+const limitCacheSize = (name, size) => {
+  caches.open(name).then(cache => {
+    cache.keys().then(keys => {
+      if(keys.length > size){
+        cache.delete(keys[0]).then(limitCacheSize(name, size));
+      }
+    });
+  });
+};
+
 self.addEventListener('install', function(event) {
   // Perform install steps
   event.waitUntil(
@@ -72,6 +83,8 @@ self.addEventListener('fetch', evt => {
       return cacheRes || fetch(evt.request).then(fetchRes => {
         return caches.open(dynamicCacheName).then(cache => {
           cache.put(evt.request.url, fetchRes.clone());
+          // check cached items size
+          limitCacheSize(dynamicCacheName, 3);
           return fetchRes;
         });
       });
