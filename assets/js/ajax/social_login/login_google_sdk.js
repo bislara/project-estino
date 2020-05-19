@@ -1,5 +1,5 @@
   var GoogleAuth;
-  // var SCOPE = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
+// setting which data to get from Google
   var SCOPE = "https://www.googleapis.com/auth/userinfo.profile";
   function handleClientLoad() {
     // Load the API's client and auth2 modules.
@@ -7,6 +7,7 @@
     gapi.load('client:auth2', initClient);
   }
 
+  // Function called when google sigin is clicked
   function initClient() {
     // Retrieve the discovery document for version 3 of Google Drive API.
     // In practice, your app can retrieve one or more discovery documents.
@@ -15,6 +16,9 @@
     // Initialize the gapi.client object, which app uses to make API requests.
     // Get API key and client ID from API Console.
     // 'scope' field specifies space-delimited list of access scopes.
+
+    // Get the API key from the google developers dashboard and also get the clientId by creating a project in the dashboard
+
     gapi.client.init({
         'apiKey': 'AIzaSyCHGhMCa6zPgqfYMY0BMvfVW1ld5wkBnN8',
         'clientId': '231052077169-fr1vuf8j3qnqldsjffljav5rbqaacgkf.apps.googleusercontent.com',
@@ -57,6 +61,7 @@
     GoogleAuth.disconnect();
   }
 
+  // get the data from the Google
   function setSigninStatus(isSignedIn) {
     var user = GoogleAuth.currentUser.get();
     var isAuthorized = user.hasGrantedScopes(SCOPE);
@@ -73,13 +78,17 @@
       console.log('Email: ' + profile.getEmail());
     }
 
-
+             
       var email = profile.getEmail();
       var atpos = email.indexOf("@");
       var dotpos = email.lastIndexOf(".");  
       var link_email = "email="+email;
       console.log("Starting...");      
-    
+
+       // Check if email id already exists
+       // if exists then just login 
+       // else register as a new user
+              
                 $.ajax({
                 url: '../apis/user/auth/social_login/email_check.php',
                 type: 'post',
@@ -117,6 +126,7 @@
                         });
 
                       }
+                      // if new user
                       else if(output.status=="failure")
                       {                      
                         console.log("New user");
@@ -159,10 +169,11 @@
 
     } 
     else {
+      // if access not given to the app
       console.log("Unable to login or the user has declined to accept");
     }
   }
-
+  // set the signin state
   function updateSigninStatus(isSignedIn) {
     setSigninStatus();
   }

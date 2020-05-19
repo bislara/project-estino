@@ -37,8 +37,7 @@
 			<form action="#">
 				<h1>Create Account</h1>
 
-                <!-- <div id="success_fail_info"></div> -->
-				<div id="error" style="color: red;"></div>
+                <div id="error" style="color: red;"></div>
                 <div id="good" style="color: #29fd0f;"></div>
 
 				<input type="text" id="name" placeholder="Name" />
@@ -46,7 +45,7 @@
 					<div class="col-md-6">
 						<input type="number" id="phone" placeholder="Contact Number" />
 					</div>
-					<!-- <div><input type="text" placeholder="Gender" /></div> -->
+					
 					<div class="col-md-6">
 					<select name="Gender" id="gender">
 					    <option value="male">Male</option>
@@ -68,15 +67,9 @@
 		<div id="login" class="form-container sign-in-container">
 			<form action="#">
 				<h1>Sign in</h1>
-				<!-- <div class="social-container">
-					<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-					<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-					<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-				</div> -->
-				<!-- <span>or use your account</span> -->
 				<input type="email" id="login_email" placeholder="Email" />
 				<input type="password" id="login_password" placeholder="Password" />
-				<a class="btnR" href="#">Forgot your password?</a>
+				<!-- <a class="btnR" href="#">Forgot your password?</a> -->
 				<button id="signin">Sign In</button><br>
 				<h4>OR</h4><br>
 				<a href="" id="fb_button"><img src="../assets/images/fb_login.png"></a><br><br>
@@ -86,8 +79,7 @@
 		<div class="overlay-container">
 			<div class="overlayR">
 				<div class="overlay-panel overlay-left">
-				    <!--<button class="add-button ghost">Add to home screen</button>-->
-
+				    
 				    <img class="profile_img" alt="logo" src="../assets/images/estino_logo.jpeg" style="height: 26vh;" ><br>
 					<h1>Welcome Back!</h1>
 					<p>To keep connected with us please login with your personal info</p>
@@ -104,18 +96,31 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		var check = sessionStorage.getItem("user_id");
+		if (check!=0 && check!="" && check) 
+		{
+			window.location = './user_dashboard.html?id='+check;
+		}	
 
+
+	</script>
+	<!-- JS file for switching tabs between the login and signup -->
 	<script src="../assets/js/register.js"></script>
+	<!-- Core js files -->
 	<script src="../assets/js/jquery.min.js"></script>
 	<script src="../assets/js/sweetalert/sweetalert.js"></script>
-	
+	<!-- Js files to handle the login using social media -->
     <script src="../assets/js/ajax/social_login/login_fb_sdk.js"></script>
     <script src="../assets/js/ajax/social_login/login_google_sdk.js"></script>
+
     <script async defer src="https://apis.google.com/js/api.js"
         onload="this.onload=function(){};handleClientLoad()"
         onreadystatechange="if (this.readyState === 'complete') this.onload()">
 	</script>
+	<!-- Normal registration and login ajax file -->
     <script src="../assets/js/ajax/login_registration.js"></script>
+    <!-- service worker -->
 	<script>
     if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
@@ -127,17 +132,9 @@
       console.log('ServiceWorker registration failed: ', err);
     });
   });
-}
-//     if ('serviceWorker' in navigator) {
-//   window.addEventListener('load', () => {
-//     navigator.serviceWorker.register('../service-worker.js')
-//         .then((reg) => {
-//           console.log('Service worker registered.', reg);
-//         });
-//   });
-// }
-
+	}
   </script>
+ <!-- Add to homescreen -->
     <script src="../assets/js/add_to_homescreen.js"></script>
 
 </body>

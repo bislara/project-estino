@@ -1,3 +1,4 @@
+// add to homescreen using service worker
 let deferredPrompt;
 const addBtn = document.querySelector('.add-button');
 addBtn.style.display = 'none';

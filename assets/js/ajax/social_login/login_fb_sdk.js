@@ -1,11 +1,10 @@
 
 $(document).on("click","#fb_button",function(){
-
   checkLoginState();
-
 return false;
 });
 
+// get the app ID from the facebook dashboard after creating a app
 window.fbAsyncInit = function() {
     FB.init({
       appId      : '224029792004094',
@@ -20,33 +19,12 @@ window.fbAsyncInit = function() {
 
 
 function checkLoginState() {
-  // FB.getLoginStatus(function(response) {
-  //   // statusChangeCallback(response);
-  // 		console.log(response);
-  //       // var response = JSON.parse(response);
-  //        if(response["status"] == "connected"){
-  //        	console.log("connected");
-  //         	FB.api(
-		// 	    '/me',
-		// 	    function (result) {
-		// 	      if (result && !result.error) {
-		// 	        /* handle the result */
-		// 	        console.log(result)
-		// 	      }
-		// 	    }
-		// 	);
-
-  //         }
-  //        else
-  //        {
-  //        	console.log("Not connected");
-  //        }
-
-  // });
+    // login function of FB 
 	  FB.login(function(response) {
 	    if (response.authResponse) {
 	     console.log('Welcome!  Fetching your information.... ');
 	     console.log(response)
+       // get the data from FB
 	     FB.api('/me','GET',  {"fields":"location,picture,link,name,birthday,email,hometown,gender"}, function(response) {
 	     	console.log(response);
 
@@ -55,7 +33,9 @@ function checkLoginState() {
             var dotpos = email.lastIndexOf(".");  
             var link_email = "email="+email;
             
-    
+              // Check if email id already exists
+              // if exists then just login 
+              // else register as a new user
                 $.ajax({
                 url: '../apis/user/auth/social_login/email_check.php',
                 type: 'post',
@@ -71,6 +51,7 @@ function checkLoginState() {
                         type: 'post',
                         data:data_str,
                             success: function(response) {
+                              // Check if the login using fb is successfull
                                 console.log(response);
                                 var response = JSON.parse(response);
                                 if(response.status == "success"){
@@ -94,6 +75,7 @@ function checkLoginState() {
                         });
 
                       }
+                      // if new user
                       else if(output.status=="failure")
                       {                      
                         console.log("New user");
@@ -103,6 +85,7 @@ function checkLoginState() {
                         type: 'post',
                         data:user_data,
                             success: function(response) {
+                              // if registration is successfull
                                 console.log(response);
                                 var response = JSON.parse(response);
                                 if(response.status == "success"){
@@ -115,7 +98,6 @@ function checkLoginState() {
 
                                }
                               else if(response.status=="failure"){
-                                //swal(response.result, ": [", "warning");
                                 console.log(response.result)
                                swal("Unable to login! Please try again", "", "error");
                               }
@@ -131,9 +113,11 @@ function checkLoginState() {
 	       console.log('Good to see you, ' + response.name + response.email + response.gender + response.birthday+ '.');
 	     });
 	    } else {
+        // if the user didnt authorize the app to get the fb data
 	     console.log('User cancelled login or did not fully authorize.');
 	    }
 	},{scope: 'email,user_birthday,user_gender,user_location,user_link',return_scopes: true});
+// abpve are the data we are getting from fb
 
 	 //  FB.logout(function(response) {
   // 		// user is now logged out
@@ -144,6 +128,7 @@ function checkLoginState() {
 
 }
 
+// getting FB SDK file 
  (function(d, s, id){
      var js, fjs = d.getElementsByTagName(s)[0];
      if (d.getElementById(id)) {return;}
