@@ -50,8 +50,8 @@ $(document).ready(function() {
 
 						if (response.result['basicInfo']['no_cycles']!=0)
 						{
-							lat = response.result['basicInfo']['gps_details']["1"][0];			
-							lon = response.result['basicInfo']['gps_details']["1"][1];
+							lat = response.result['basicInfo']['gps_details'][0][0];			
+							lon = response.result['basicInfo']['gps_details'][0][1];
 
 							var script = document.createElement('script');
 	             			script.src = '../assets/js/ajax/map/google_map.js';

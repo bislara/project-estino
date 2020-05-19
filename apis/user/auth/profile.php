@@ -21,11 +21,20 @@
                 } else {
                     $basicInfo = mysqli_fetch_array($query,MYSQLI_ASSOC);           
                 }
+                $q = mysqli_query($conn, "SELECT cycle_id FROM request_cycle_id where user_id ='".$user_id."' AND approved = 1");
 
                 $basicInfo["gps_details"] =  unserialize($basicInfo["gps_details"]);
+                $basicInfo["no_cycles"] = mysqli_num_rows($q);
+
+                $cycle_ids = array();
+                while($r = mysqli_fetch_array($q, MYSQLI_ASSOC)) 
+                {
+                    $cycle_ids[] = $r;
+                }
                 
                 $result = (object) [
                     'basicInfo'=>$basicInfo,
+                    'cycle_ids' => $cycle_ids,
                 ];
                 echo json_encode(array('status' => 'success', 'result' => $result));
 
