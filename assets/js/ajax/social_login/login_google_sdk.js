@@ -1,13 +1,12 @@
   var GoogleAuth;
-// setting which data to get from Google
+  // setting which data to get from Google
   var SCOPE = "https://www.googleapis.com/auth/userinfo.profile";
   function handleClientLoad() {
     // Load the API's client and auth2 modules.
     // Call the initClient function after the modules load.
     gapi.load('client:auth2', initClient);
   }
-
-  // Function called when google sigin is clicked
+ // Function called when google sigin is clicked
   function initClient() {
     // Retrieve the discovery document for version 3 of Google Drive API.
     // In practice, your app can retrieve one or more discovery documents.
@@ -61,7 +60,8 @@
     GoogleAuth.disconnect();
   }
 
-  // get the data from the Google
+// get the data from the Google
+
   function setSigninStatus(isSignedIn) {
     var user = GoogleAuth.currentUser.get();
     var isAuthorized = user.hasGrantedScopes(SCOPE);
@@ -78,17 +78,18 @@
       console.log('Email: ' + profile.getEmail());
     }
 
-             
+
       var email = profile.getEmail();
       var atpos = email.indexOf("@");
       var dotpos = email.lastIndexOf(".");  
       var link_email = "email="+email;
-      console.log("Starting...");      
+      console.log("Starting...");     
+
 
        // Check if email id already exists
        // if exists then just login 
-       // else register as a new user
-              
+       // else register as a new user 
+    
                 $.ajax({
                 url: '../apis/user/auth/social_login/email_check.php',
                 type: 'post',
@@ -126,7 +127,7 @@
                         });
 
                       }
-                      // if new user
+                       // if new user
                       else if(output.status=="failure")
                       {                      
                         console.log("New user");
