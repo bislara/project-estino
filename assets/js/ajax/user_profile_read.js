@@ -46,6 +46,8 @@ $(document).ready(function() {
 						email = response.result['basicInfo']['email'];
 						var phone = response.result['basicInfo']['phone'];
 						var address = response.result['basicInfo']['address'];
+						$("#distance_travel").append(response.result['basicInfo']['distance_travelled'] + " Kms");
+
 						if (response.result['basicInfo']['no_cycles']!=0)
 						{
 							lat = response.result['basicInfo']['gps_details']["1"][0];			
@@ -61,8 +63,7 @@ $(document).ready(function() {
 						console.log(lat,lon)
 
 						$(".user_name").append(name);
-						$("#distance_travel").append(response.result['basicInfo']['distance_travelled'] + " Kms");
-
+						
 						if (response.result['basicInfo']['picture'] == '') 
 						{							
 							$(".profile_img").attr("src","../assets/img/anime3.png");

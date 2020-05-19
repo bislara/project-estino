@@ -21,8 +21,10 @@
                 } else {
                     $basicInfo = mysqli_fetch_array($query,MYSQLI_ASSOC);           
                 }
+                $q = mysqli_query($conn, "SELECT COUNT(*) FROM request_cycle_id where user_id ='".$user_id."' AND approved = 1");
 
                 $basicInfo["gps_details"] =  unserialize($basicInfo["gps_details"]);
+                $basicInfo["no_cycles"] = mysqli_fetch_row($q);
                 
                 $result = (object) [
                     'basicInfo'=>$basicInfo,
