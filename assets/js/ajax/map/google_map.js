@@ -1,3 +1,9 @@
+      
+      // ///////////////////////////////////////////////////////////// 
+      // Map API Key to be put in the  html file 
+      // ////////////////////////////////////////////////////////////
+
+
       // In this, we center the map, and add a marker, using a LatLng object
       // literal instead of a google.maps.LatLng object. LatLng object literals are
       // a convenient way to add a LatLng coordinate and, in most cases, can be used
@@ -101,7 +107,7 @@
           }); 
 
       }
-      
+
       // call the initialize function
       google.maps.event.addDomListener(window, 'load', initialize);
       $(document).ready( function () {

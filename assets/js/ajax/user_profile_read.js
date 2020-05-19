@@ -52,7 +52,8 @@ $(document).ready(function() {
 				            cycle_ids[i] = response.result['cycle_ids'][i];
 						}
 						console.log(cycle_ids);
-						$("#distance_travel").append(response.result['basicInfo']['distance_travelled'] + " Kms");
+						var distance = parseFloat(response.result['basicInfo']['distance_travelled']);
+						$("#distance_travel").append(distance.toFixed(2) + " Kms");
 
 						if (response.result['basicInfo']['no_cycles']!=0)
 						{
