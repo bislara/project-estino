@@ -15,8 +15,9 @@ var paid=-1;
 var id = 0;
 var name = "";
 var email = "";
-var lat = 0;
-var lon = 0;
+var lat = [];
+var lon = [];
+var cycle_ids = [];
 var rent_mode = 0;
 $(document).ready(function() {
 
@@ -46,13 +47,20 @@ $(document).ready(function() {
 						email = response.result['basicInfo']['email'];
 						var phone = response.result['basicInfo']['phone'];
 						var address = response.result['basicInfo']['address'];
+						
+						for (var i = 0; i < response.result['cycle_ids'].length; i++) {
+				            cycle_ids[i] = response.result['cycle_ids'][i];
+						}
+						console.log(cycle_ids);
 						$("#distance_travel").append(response.result['basicInfo']['distance_travelled'] + " Kms");
 
 						if (response.result['basicInfo']['no_cycles']!=0)
 						{
-							lat = response.result['basicInfo']['gps_details'][0][0];			
-							lon = response.result['basicInfo']['gps_details'][0][1];
-
+							for (var i = 0; i < cycle_ids.length; i++) {
+					            lat[i] = response.result['basicInfo']['gps_details'][cycle_ids[i].cycle_id][0];
+					            lon[i] = response.result['basicInfo']['gps_details'][cycle_ids[i].cycle_id][1];
+							}	
+							
 							var script = document.createElement('script');
 	             			script.src = '../assets/js/ajax/map/google_map.js';
 	             			document.body.appendChild(script);		
@@ -60,7 +68,7 @@ $(document).ready(function() {
 						else
 							console.log("No cycles")
 						rent_mode = response.result['basicInfo']['rent_mode'];
-						console.log(lat,lon)
+						// console.log(lat,lon)
 
 						$(".user_name").append(name);
 						
