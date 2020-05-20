@@ -19,7 +19,26 @@ var lat = [];
 var lon = [];
 var cycle_ids = [];
 var rent_mode = 0;
+
+
+let user_lat = 0;
+let user_lon = 0;
+       
+function showPosition(position) {
+   console.log(position);
+   user_lat = position.coords.latitude;
+   user_lon = position.coords.longitude;
+}
+
+
 $(document).ready(function() {
+
+	if (navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        console.log("Geolocation is not supported by this browser.");
+    }
+
 
 	  if(user_id)
 	   {

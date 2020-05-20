@@ -28,6 +28,11 @@
     }],
   "start_url": "views/register_login.html",
   "display": "standalone",
-  "background_color": "#3E4EB8",
-  "theme_color": "#2F3BA2"
+  "theme_color": "#2F3BA2",
+  "scope": ".",
+  "orientation": "portrait-primary",
+  "background_color": "#fff",
+  "description": "A Webapp for Estinno Energy Pvt.Ltd ",
+  "dir": "ltr",
+  "lang": "en-US"
 }

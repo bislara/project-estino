@@ -12,20 +12,46 @@
       var map;
 
 
-
       // ///////////////////////////////////////////////////////////// 
       // main function for plotting in map
       // ////////////////////////////////////////////////////////////
       function initialize() {
+
+        
+        console.log(user_lat,user_lon);
         
         // initialize the map with a particular zoom ratio and its center
-        var mapOptions = {
-          zoom: 12,
-          center: {lat: parseFloat(lat[0]), lng: parseFloat(lon[0])}
-        };
+        if(user_lat!=0 && user_lon!=0)
+        {
+          var mapOptions = {
+            zoom: 12,
+            center: {lat: parseFloat(user_lat), lng: parseFloat(user_lon)}
+          };
+        }
+        else
+        {
+         var mapOptions = {
+            zoom: 12,
+            center: {lat: parseFloat(lat[0]), lng: parseFloat(lon[0])}
+          }; 
+        }
         map = new google.maps.Map(document.getElementById('map'),
             mapOptions);
 
+        // user own location marker
+        var own_marker = new google.maps.Marker({
+          position: {lat: parseFloat(user_lat), lng: parseFloat(user_lon)},
+          map: map
+        });
+
+        // showing the user location infowindow
+        var own_infowindow = new google.maps.InfoWindow({
+          content: '<p style= "color:black;">User Location:' + own_marker.getPosition() + '</p>'
+        });
+
+        google.maps.event.addListener(own_marker, 'click', function() {
+          own_infowindow.open(map, own_marker);
+        });
 
       // ///////////////////////////////////////////////////////////// 
       // plotting for user's cycles in map
@@ -109,7 +135,8 @@
       }
 
       // call the initialize function
-      google.maps.event.addDomListener(window, 'load', initialize);
+      // google.maps.event.addDomListener(window, 'load', initialize);
       $(document).ready( function () {
+
               initialize();
           });
