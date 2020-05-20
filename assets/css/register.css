@@ -178,6 +178,12 @@ select{
 	width:100vw;
 }
 
+#add-button {
+	/*position: sticky;*/
+/*    top: 8vh;
+    left: 10vw;*/
+}
+
 @media only screen and (min-width: 800px){
 
 	h1 {
@@ -431,6 +437,11 @@ select{
 	footer a {
 		color: #3c97bf;
 		text-decoration: none;
+	}
+	#add-button {
+		position: absolute;
+	    top: 8vh;
+	    /*left: 10vw;*/
 	}
 	
 }
